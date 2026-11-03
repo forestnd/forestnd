@@ -102,7 +102,7 @@
         <rect x="250" y="140" width="180" height="180" rx="16" fill="#0F172A" stroke="#10B981" stroke-width="2" />
 
         <!-- Auto-fetches your GitHub Profile Picture -->
-        <image x="250" y="140" width="180" height="180" href="https://raw.githubusercontent.com/forestnd/forestnd/main/logo.jpeg" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)" />
+        <image x="250" y="140" width="180" height="180" href="https://raw.githubusercontent.com/forestnd/forestnd/refs/heads/main/logo.jpeg" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)" />
 
         <!-- Animated Holographic Laser Scan Line -->
         <g clip-path="url(#avatarClip)">
