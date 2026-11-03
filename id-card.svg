@@ -1,0 +1,206 @@
+<svg width="680" height="660" viewBox="0 0 680 660" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Styles & Keyframe Animations -->
+    <style>
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+      }
+      @keyframes sway {
+        0%, 100% { transform: rotate(-0.5deg); }
+        50% { transform: rotate(0.5deg); }
+      }
+      @keyframes pulseGlow {
+        0%, 100% { stroke: #10B981; filter: drop-shadow(0 0 2px #10B981); }
+        50% { stroke: #06B6D4; filter: drop-shadow(0 0 8px #06B6D4); }
+      }
+      @keyframes scan {
+        0% { transform: translateY(0px); opacity: 0; }
+        15% { opacity: 0.8; }
+        85% { opacity: 0.8; }
+        100% { transform: translateY(170px); opacity: 0; }
+      }
+
+      .animated-badge {
+        transform-origin: top center;
+        animation: float 4s ease-in-out infinite;
+      }
+      .animated-strap {
+        transform-origin: top center;
+        animation: sway 5s ease-in-out infinite;
+      }
+      .glowing-border {
+        animation: pulseGlow 3s infinite ease-in-out;
+      }
+      .scan-line {
+        animation: scan 3s linear infinite;
+      }
+    </style>
+
+    <!-- Drop Shadow Filters -->
+    <filter id="card-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+
+    <!-- Lanyard Strap Gradient -->
+    <linearGradient id="strapGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#991B1B" />
+      <stop offset="50%" stop-color="#EF4444" />
+      <stop offset="100%" stop-color="#7F1D1D" />
+    </linearGradient>
+
+    <!-- Metallic Buckle Gradient -->
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F3F4F6" />
+      <stop offset="50%" stop-color="#9CA3AF" />
+      <stop offset="100%" stop-color="#374151" />
+    </linearGradient>
+
+    <!-- Card Background Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181825" />
+      <stop offset="50%" stop-color="#11111B" />
+      <stop offset="100%" stop-color="#0B0B10" />
+    </linearGradient>
+
+    <!-- Stats Card Background Gradient -->
+    <linearGradient id="statBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181A24" />
+      <stop offset="100%" stop-color="#11131C" />
+    </linearGradient>
+
+    <!-- Photo Slot Clip Path (Rounded Square) -->
+    <clipPath id="avatarClip">
+      <rect x="250" y="140" width="180" height="180" rx="16" />
+    </clipPath>
+  </defs>
+
+  <!-- 1. SWAYING LANYARD STRAP -->
+  <g class="animated-strap">
+    <rect x="326" y="0" width="28" height="74" rx="3" fill="url(#strapGrad)" />
+  </g>
+
+  <!-- 2. FLOATING BADGE ASSEMBLY -->
+  <g class="animated-badge">
+    <!-- Metal Clip & Loop -->
+    <g filter="url(#card-shadow)">
+      <rect x="320" y="65" width="40" height="12" rx="3" fill="url(#metalGrad)" />
+      <circle cx="340" cy="85" r="8" fill="none" stroke="url(#metalGrad)" stroke-width="4" />
+    </g>
+
+    <!-- Main Badge Shell -->
+    <g filter="url(#card-shadow)">
+      <!-- Outer Card Body -->
+      <rect x="210" y="90" width="260" height="402" rx="22" fill="url(#cardGrad)" stroke="#1F2937" stroke-width="2" />
+
+      <!-- Glowing Accent Border -->
+      <rect class="glowing-border" x="211" y="91" width="258" height="400" rx="21" fill="none" stroke="#10B981" stroke-width="1.5" opacity="0.9" />
+
+      <!-- Photo Frame / GitHub Avatar Container -->
+      <g>
+        <!-- Background Placeholder for Photo Slot -->
+        <rect x="250" y="140" width="180" height="180" rx="16" fill="#0F172A" stroke="#10B981" stroke-width="2" />
+
+        <!-- Auto-fetches your GitHub Profile Picture -->
+        
+
+        <!-- Animated Holographic Laser Scan Line -->
+        <g clip-path="url(#avatarClip)">
+          <line class="scan-line" x1="250" y1="140" x2="430" y2="140" stroke="#06B6D4" stroke-width="3" opacity="0.8" />
+        </g>
+      </g>
+
+      <!-- Profile Username & Titles -->
+      <text x="340" y="355" font-family="&#39;Segoe UI&#39;, Roboto, Ubuntu, sans-serif" font-weight="800" font-size="22" fill="#F9FAFB" text-anchor="middle" letter-spacing="1">
+        @forestnd
+      </text>
+
+      <text x="340" y="380" font-family="&#39;Segoe UI&#39;, Roboto, Ubuntu, sans-serif" font-weight="500" font-size="12" fill="#10B981" text-anchor="middle" letter-spacing="0.5">
+        AUTOMATION • PYTHON • PHOTOGRAPHY
+      </text>
+
+      <!-- Decorative Divider Line -->
+      <line x1="240" y1="405" x2="440" y2="405" stroke="#374151" stroke-width="1" stroke-dasharray="4 4" />
+
+      <!-- Faux Barcode Section -->
+      <g fill="#E5E7EB" transform="translate(240, 420)" opacity="0.85">
+        <rect x="0" y="0" width="3" height="32" />
+        <rect x="5" y="0" width="1" height="32" />
+        <rect x="8" y="0" width="4" height="32" />
+        <rect x="15" y="0" width="2" height="32" />
+        <rect x="20" y="0" width="5" height="32" />
+        <rect x="28" y="0" width="2" height="32" />
+        <rect x="33" y="0" width="1" height="32" />
+        <rect x="36" y="0" width="6" height="32" />
+        <rect x="45" y="0" width="2" height="32" />
+        <rect x="50" y="0" width="4" height="32" />
+        <rect x="57" y="0" width="1" height="32" />
+        <rect x="60" y="0" width="5" height="32" />
+        <rect x="68" y="0" width="2" height="32" />
+        <rect x="73" y="0" width="3" height="32" />
+        <rect x="78" y="0" width="1" height="32" />
+        <rect x="82" y="0" width="6" height="32" />
+        <rect x="91" y="0" width="2" height="32" />
+        <rect x="96" y="0" width="4" height="32" />
+        <rect x="103" y="0" width="2" height="32" />
+        <rect x="108" y="0" width="5" height="32" />
+        <rect x="116" y="0" width="1" height="32" />
+        <rect x="120" y="0" width="3" height="32" />
+        <rect x="126" y="0" width="4" height="32" />
+        <rect x="133" y="0" width="2" height="32" />
+        <rect x="138" y="0" width="5" height="32" />
+        <rect x="146" y="0" width="1" height="32" />
+        <rect x="150" y="0" width="3" height="32" />
+        <rect x="156" y="0" width="6" height="32" />
+        <rect x="165" y="0" width="2" height="32" />
+        <rect x="170" y="0" width="4" height="32" />
+        <rect x="177" y="0" width="1" height="32" />
+        <rect x="180" y="0" width="5" height="32" />
+        <rect x="188" y="0" width="2" height="32" />
+        <rect x="193" y="0" width="3" height="32" />
+        <rect x="198" y="0" width="2" height="32" />
+      </g>
+
+      <!-- Status Indicator & Authenticated Tag -->
+      <text x="340" y="470" font-family="monospace" font-size="9" fill="#9CA3AF" text-anchor="middle" letter-spacing="1">
+        AUTHENTICATED PROFILE • FORESTND
+      </text>
+      
+      <!-- Green Active Status Dot -->
+      <circle cx="432" cy="467" r="3.5" fill="#10B981" />
+    </g>
+  </g>
+
+  <!-- 3. STATS CARDS BELOW THE BADGE -->
+  <g transform="translate(15, 515)" filter="url(#card-shadow)">
+    <!-- CARD 1: REPOS -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="205" height="120" rx="16" fill="url(#statBg)" stroke="#26293B" stroke-width="1.5" />
+      <!-- Folder Icon -->
+      <path d="M18 20H8C6.9 20 6 19.1 6 18V8C6 6.9 6.9 6 8 6H12L14 8H18C19.1 8 20 8.9 20 10V18C20 19.1 19.1 20 18 20Z" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(15, 15)" />
+      <text x="185" y="32" font-family="&#39;Segoe UI&#39;, sans-serif" font-size="11" font-weight="600" fill="#6B7280" text-anchor="end" letter-spacing="1">REPOS</text>
+      <text x="25" y="75" font-family="&#39;Segoe UI&#39;, sans-serif" font-size="30" font-weight="800" fill="#F9FAFB">42</text>
+      <text x="25" y="100" font-family="&#39;Segoe UI&#39;, sans-serif" font-size="13" font-weight="500" fill="#9CA3AF">Cloud & Python</text>
+    </g>
+
+    <!-- CARD 2: STARS -->
+    <g transform="translate(222, 0)">
+      <rect x="0" y="0" width="205" height="120" rx="16" fill="url(#statBg)" stroke="#26293B" stroke-width="1.5" />
+      <!-- Star Icon -->
+      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#34D399" transform="translate(15, 15) scale(0.9)" />
+      <text x="185" y="32" font-family="&#39;Segoe UI&#39;, sans-serif" font-size="11" font-weight="600" fill="#6B7280" text-anchor="end" letter-spacing="1">STARS</text>
+      <text x="25" y="75" font-family="&#39;Segoe UI&#39;, sans-serif" font-size="30" font-weight="800" fill="#F9FAFB">384</text>
+      <text x="25" y="100" font-family="&#39;Segoe UI&#39;, sans-serif" font-size="13" font-weight="500" fill="#9CA3AF">Earned</text>
+    </g>
+
+    <!-- CARD 3: COMMITS -->
+    <g transform="translate(444, 0)">
+      <rect x="0" y="0" width="205" height="120" rx="16" fill="url(#statBg)" stroke="#26293B" stroke-width="1.5" />
+      <!-- Lightning Bolt Icon -->
+      <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(15, 13) scale(0.9)" />
+      <text x="185" y="32" font-family="&#39;Segoe UI&#39;, sans-serif" font-size="11" font-weight="600" fill="#6B7280" text-anchor="end" letter-spacing="1">COMMITS</text>
+      <text x="25" y="75" font-family="&#39;Segoe UI&#39;, sans-serif" font-size="30" font-weight="800" fill="#F9FAFB">1,240</text>
+      <text x="25" y="100" font-family="&#39;Segoe UI&#39;, sans-serif" font-size="13" font-weight="500" fill="#9CA3AF">This Year</text>
+    </g>
+  </g>
+</svg>
