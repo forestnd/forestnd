@@ -53,7 +53,7 @@
     <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#F3F4F6" />
       <stop offset="50%" stop-color="#9CA3AF" />
-      <stop offset="100%" stop-color="#374151" />
+      <stop offset="100%" stop-color="#4B5563" />
     </linearGradient>
 
     <!-- Card Background Gradient -->
