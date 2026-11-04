@@ -112,7 +112,7 @@
 
       <!-- Profile Username & Titles -->
       <text x="340" y="355" font-family="sans-serif" font-weight="800" font-size="22" fill="#F9FAFB" text-anchor="middle" letter-spacing="1">
-        @forestnd
+        @FORESTND
       </text>
 
       <text x="340" y="380" font-family="sans-serif" font-weight="500" font-size="12" fill="#10B981" text-anchor="middle" letter-spacing="0.5">
