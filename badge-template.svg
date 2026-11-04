@@ -123,42 +123,8 @@
       <line x1="240" y1="405" x2="440" y2="405" stroke="#374151" stroke-width="1" stroke-dasharray="4 4" />
 
       <!-- Faux Barcode Section -->
-      <g fill="#E5E7EB" transform="translate(240, 420)" opacity="0.85">
-        <rect x="0" y="0" width="3" height="32" />
-        <rect x="5" y="0" width="1" height="32" />
-        <rect x="8" y="0" width="4" height="32" />
-        <rect x="15" y="0" width="2" height="32" />
-        <rect x="20" y="0" width="5" height="32" />
-        <rect x="28" y="0" width="2" height="32" />
-        <rect x="33" y="0" width="1" height="32" />
-        <rect x="36" y="0" width="6" height="32" />
-        <rect x="45" y="0" width="2" height="32" />
-        <rect x="50" y="0" width="4" height="32" />
-        <rect x="57" y="0" width="1" height="32" />
-        <rect x="60" y="0" width="5" height="32" />
-        <rect x="68" y="0" width="2" height="32" />
-        <rect x="73" y="0" width="3" height="32" />
-        <rect x="78" y="0" width="1" height="32" />
-        <rect x="82" y="0" width="6" height="32" />
-        <rect x="91" y="0" width="2" height="32" />
-        <rect x="96" y="0" width="4" height="32" />
-        <rect x="103" y="0" width="2" height="32" />
-        <rect x="108" y="0" width="5" height="32" />
-        <rect x="116" y="0" width="1" height="32" />
-        <rect x="120" y="0" width="3" height="32" />
-        <rect x="126" y="0" width="4" height="32" />
-        <rect x="133" y="0" width="2" height="32" />
-        <rect x="138" y="0" width="5" height="32" />
-        <rect x="146" y="0" width="1" height="32" />
-        <rect x="150" y="0" width="3" height="32" />
-        <rect x="156" y="0" width="6" height="32" />
-        <rect x="165" y="0" width="2" height="32" />
-        <rect x="170" y="0" width="4" height="32" />
-        <rect x="177" y="0" width="1" height="32" />
-        <rect x="180" y="0" width="5" height="32" />
-        <rect x="188" y="0" width="2" height="32" />
-        <rect x="193" y="0" width="3" height="32" />
-        <rect x="198" y="0" width="2" height="32" />
+      <g>
+      <image x="230" y="390" width="200" height="90" href="{{BASE64_FOOTER}}"  />
       </g>
     </g>
   </g>
