@@ -8,7 +8,7 @@ def fetch_github_stats(username):
     """Fetches public repo count, star count, and total annual contributions."""
     repos_count = 0
     stars_count = 0
-    total_contributions = 272 # Fallback default
+    total_contributions = 999 # Fallback default
 
     try:
         # 1. Fetch repositories to count repos and stars
@@ -40,9 +40,9 @@ def fetch_github_stats(username):
 
     except Exception as e:
         print(f"Warning: Could not fetch live contribution stats ({e}). Using default/fallback.")
-        repos_count = 42
-        stars_count = 384
-        total_contributions = 272
+        repos_count = 99
+        stars_count = 999
+        total_contributions = 999
 
     return {
         "REPOS": str(repos_count),
