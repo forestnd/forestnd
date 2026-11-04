@@ -116,7 +116,7 @@
       </text>
 
       <text x="340" y="380" font-family="sans-serif" font-weight="500" font-size="12" fill="#10B981" text-anchor="middle" letter-spacing="0.5">
-        AUTOMATION • PYTHON
+        • HOBBIE CODER
       </text>
 
       <!-- Decorative Divider Line -->
@@ -160,14 +160,6 @@
         <rect x="193" y="0" width="3" height="32" />
         <rect x="198" y="0" width="2" height="32" />
       </g>
-
-      <!-- Status Indicator & Authenticated Tag -->
-      <text x="340" y="470" font-family="monospace" font-size="9" fill="#9CA3AF" text-anchor="middle" letter-spacing="1">
-        AUTHENTICATED PROFILE • FORESTND
-      </text>
-      
-      <!-- Green Active Status Dot -->
-      <circle cx="432" cy="467" r="3.5" fill="#10B981" />
     </g>
   </g>
 
