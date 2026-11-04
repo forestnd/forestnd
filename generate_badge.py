@@ -40,13 +40,14 @@ def fetch_github_stats(username):
         
         # Fallback if events payload returns 0
         if commits_this_year == 0:
+            print("Warning: Commits Returned back as 0")
             commits_this_year = 1240
 
     except Exception as e:
         print(f"Warning: Could not fetch live GitHub stats ({e}). Using defaults.")
-        repos_count = 42
-        stars_count = 384
-        commits_this_year = 1240
+        repos_count = 99
+        stars_count = 999
+        commits_this_year = 999
 
     return {
         "REPOS": str(repos_count),
