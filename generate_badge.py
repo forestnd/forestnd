@@ -3,7 +3,7 @@ import json
 import os
 import urllib.request
 
-USERNAME = "forestnd"
+USERNAME = os.environ.get("GH_USERNAME")
 
 def fetch_github_stats(username):
     """Fetches public repo count and star counts using GitHub's authenticated API."""
@@ -65,6 +65,7 @@ def main():
     final_svg = final_svg.replace("{{VAL_REPOS}}", stats["REPOS"])
     final_svg = final_svg.replace("{{VAL_STARS}}", stats["STARS"])
     final_svg = final_svg.replace("{{VAL_COMMITS}}", stats["COMMITS"])
+    final_svg = final_svg.replace("{{VAL_USERNAME}}", USERNAME)
 
     # Save final badge.svg
     with open("badge.svg", "w", encoding="utf-8") as output_file:
