@@ -25,6 +25,7 @@ jobs:
       - name: Run SVG generator script
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Passes GitHub's token securely to Python
+          GH_USERNAME: FORESTND
         run: python generate_badge.py
 
       - name: Commit and push if badge changed
