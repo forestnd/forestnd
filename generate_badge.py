@@ -82,19 +82,21 @@ print("Fetching account stats...")
 for repository in repositories:
     owner = repository["owner"]["login"]
     name = repository["name"]
+    activity = get_commit_activity(owner, name)
+    yearly_commit_count = sum(week["total"] for week in activity)
     if name == owner:
+        print(f"Skipping repository: {owner}/{name} Commits: {yearly_commit_count} (same as owner)")
         continue
     if repository["fork"]:
+        print(f"Skipping repository: {owner}/{name} Commits: {yearly_commit_count} (forked)")
         continue
     if repository["visibility"] == "private":
+        print(f"Skipping repository: {owner}/{name} Commits: {yearly_commit_count} (private)")
         account_stats["private_repos"] += 1
     else:
         account_stats["public_repos"] += 1
-
-    activity = get_commit_activity(owner, name)
-    yearly_commit_count = sum(week["total"] for week in activity)
+        print(f"Repository: {owner}/{name}, Yearly Commits: {yearly_commit_count} (public)")    
     account_stats["commits"] += yearly_commit_count
-    print(f"Repository: {owner}/{name}, Yearly Commits: {yearly_commit_count}")
 
 print("Writing final SVG...")
 with open("badge-template.svg", "r", encoding="utf-8") as template_file:
