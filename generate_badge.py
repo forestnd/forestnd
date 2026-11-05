@@ -1,46 +1,66 @@
-import base64
-import json
 import os
-import urllib.request
+import time
+import requests
+import base64
+from datetime import datetime
 
-USERNAME = os.environ.get("GH_USERNAME")
 
-def fetch_github_stats(username):
-    """Fetches public repo count and star counts using GitHub's authenticated API."""
-    repos_count = 0
-    stars_count = 0
-    total_contributions = 272  # Fallback baseline
+TOKEN = os.environ.get("GH_TOKEN")
+API = "https://api.github.com"
+HEADERS = {
+    "Accept": "application/vnd.github+json",
+    "Authorization": f"Bearer {TOKEN}",
+}
 
-    # Grab the GitHub token passed from the Action environment
-    token = os.environ.get("GH_TOKEN")
-    
-    headers = {
-        "User-Agent": "Python-Badge-Generator",
-        "Accept": "application/vnd.github.v3+json"
-    }
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
+def get_user_info():
+    response = requests.get(f"{API}/user", headers=HEADERS)
+    response.raise_for_status()
+    return response.json()
 
-    try:
-        # Fetch repositories using the authenticated headers
-        repos_url = f"https://api.github.com/users/{username}/repos?per_page=100"
-        req = urllib.request.Request(repos_url, headers=headers)
-        
-        with urllib.request.urlopen(req) as response:
-            repos = json.loads(response.read().decode())
-            repos_count = len(repos)
-            stars_count = sum(repo.get("stargazers_count", 0) for repo in repos)
+def get_all_repositories():
+    repositories = []
+    page = 1
 
-    except Exception as e:
-        print(f"Warning: Could not fetch authenticated GitHub API stats ({e}). Using defaults.")
-        repos_count = 42
-        stars_count = 384
+    while True:
+        response = requests.get(
+            f"{API}/user/repos",
+            headers=HEADERS,
+            params={
+                "visibility": "all",
+                "affiliation": "owner,collaborator,organization_member",
+                "per_page": 100,
+                "page": page,
+            },
+        )
+        response.raise_for_status()
 
-    return {
-        "REPOS": str(repos_count),
-        "STARS": str(stars_count),
-        "COMMITS": f"{total_contributions:,}"
-    }
+        batch = response.json()
+        if not batch:
+            break
+
+        repositories.extend(batch)
+        page += 1
+
+    return repositories
+
+
+def get_commit_activity(owner, repo):
+    url = f"{API}/repos/{owner}/{repo}/stats/commit_activity"
+
+    while True:
+        response = requests.get(url, headers=HEADERS)
+
+        # GitHub may still be calculating repository statistics.
+        if response.status_code == 202:
+            time.sleep(2)
+            continue
+
+        response.raise_for_status()
+
+        if response.status_code == 204:
+            return []
+
+        return response.json()
 
 def img_convert(fiale_path):
     try:
@@ -50,31 +70,53 @@ def img_convert(fiale_path):
     except FileNotFoundError:
         print(f"Error: {fiale_path} not found!")
         return ""
-    
+
+repositories = get_all_repositories()
+user_info = get_user_info()
+account_stats = {
+    "public_repos": 0,
+    "private_repos": 0,
+    "commits": 0
+}
+print("Fetching account stats...")
+for repository in repositories:
+    owner = repository["owner"]["login"]
+    name = repository["name"]
+    if name == owner:
+        continue
+    if repository["fork"]:
+        continue
+    if repository["visibility"] == "private":
+        account_stats["private_repos"] += 1
+    else:
+        account_stats["public_repos"] += 1
+
+    activity = get_commit_activity(owner, name)
+    yearly_commit_count = sum(week["total"] for week in activity)
+    account_stats["commits"] += yearly_commit_count
+
+print("Writing final SVG...")
+with open("badge-template.svg", "r", encoding="utf-8") as template_file:
+    svg_content = template_file.read()
 
 
-def main():
-    print("Fetching live GitHub stats via Action environment...")
-    stats = fetch_github_stats(USERNAME)
-    print(f"Stats fetched -> Repos: {stats['REPOS']}, Stars: {stats['STARS']}, Contributions: {stats['COMMITS']}")
 
-    # Read SVG template
-    with open("badge-template.svg", "r", encoding="utf-8") as template_file:
-        svg_content = template_file.read()
+final_svg = svg_content.replace("{{BASE64_LOGO}}", img_convert("logo.jpeg"))
+final_svg = final_svg.replace("{{BASE64_FOOTER}}", img_convert("badge-footer.png"))
+final_svg = final_svg.replace("{{VAL_REPOS}}", str(account_stats["public_repos"] + account_stats["private_repos"]))
+final_svg = final_svg.replace("{{VAL_REPOS_PUBLIC}}", str(account_stats["public_repos"]))
+final_svg = final_svg.replace("{{VAL_REPOS_PRIVATE}}", str(account_stats["private_repos"]))
+final_svg = final_svg.replace("{{VAL_COMMITS}}", str(account_stats["commits"]))
+final_svg = final_svg.replace("{{VAL_USERNAME}}", user_info["login"])
+final_svg = final_svg.replace("{{VAL_USER_JOINED}}", datetime.strptime(user_info["created_at"], "%Y-%m-%dT%H:%M:%SZ").strftime("%d %b %Y"))
 
-    # Inject values
-    final_svg = svg_content.replace("{{BASE64_LOGO}}", img_convert("logo.jpeg"))
-    final_svg = final_svg.replace("{{BASE64_FOOTER}}", img_convert("badge-footer.png"))
-    final_svg = final_svg.replace("{{VAL_REPOS}}", stats["REPOS"])
-    final_svg = final_svg.replace("{{VAL_STARS}}", stats["STARS"])
-    final_svg = final_svg.replace("{{VAL_COMMITS}}", stats["COMMITS"])
-    final_svg = final_svg.replace("{{VAL_USERNAME}}", USERNAME)
+# Save final badge.svg
+with open("badge.svg", "w", encoding="utf-8") as output_file:
+    output_file.write(final_svg)
 
-    # Save final badge.svg
-    with open("badge.svg", "w", encoding="utf-8") as output_file:
-        output_file.write(final_svg)
-
-    print("Successfully generated badge.svg!")
-
-if __name__ == "__main__":
-    main()
+print("Successfully generated badge.svg!")
+print("-" * 10)
+print("Total Repositories:", account_stats["public_repos"] + account_stats["private_repos"])
+print("Public Repositories:", account_stats["public_repos"])
+print("Private Repositories:", account_stats["private_repos"])
+print("Total Commits:", account_stats["commits"])

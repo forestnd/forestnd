@@ -5,7 +5,8 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
+    - cron: '0 0 * * 0,1' # Runs daily at midnight UTC
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,7 +25,7 @@ jobs:
 
       - name: Run SVG generator script
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Passes GitHub's token securely to Python
+          GH_TOKEN: ${{ secrets.ACT_TOKEN }} # Passes GitHub's token securely to Python
           GH_USERNAME: FORESTND
         run: python generate_badge.py
 
