@@ -99,9 +99,14 @@ print("Writing final SVG...")
 with open("badge-template.svg", "r", encoding="utf-8") as template_file:
     svg_content = template_file.read()
 
-
-
-final_svg = svg_content.replace("{{BASE64_LOGO}}", img_convert("logo.jpeg"))
+if os.path.exists("logo.jpeg"):
+    final_svg = svg_content.replace("{{BASE64_LOGO}}", img_convert("logo.jpeg"))
+else:
+    with open("/tmp/avatar.jpeg", "wb") as out_file:
+        for chunk in requests.get(user_info["avatar_url"], stream=True).iter_content(chunk_size=1024):
+            if chunk:
+                out_file.write(chunk)
+    final_svg = svg_content.replace("{{BASE64_LOGO}}", img_convert("/tmp/avatar.jpeg"))
 final_svg = final_svg.replace("{{BASE64_FOOTER}}", img_convert("badge-footer.png"))
 final_svg = final_svg.replace("{{VAL_REPOS}}", str(account_stats["public_repos"] + account_stats["private_repos"]))
 final_svg = final_svg.replace("{{VAL_REPOS_PUBLIC}}", str(account_stats["public_repos"]))
