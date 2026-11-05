@@ -94,6 +94,7 @@ for repository in repositories:
     activity = get_commit_activity(owner, name)
     yearly_commit_count = sum(week["total"] for week in activity)
     account_stats["commits"] += yearly_commit_count
+    print(f"Repository: {owner}/{name}, Yearly Commits: {yearly_commit_count}")
 
 print("Writing final SVG...")
 with open("badge-template.svg", "r", encoding="utf-8") as template_file:
